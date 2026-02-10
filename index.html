@@ -4,143 +4,97 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Qadam English — IELTS Course</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
 <style>
-/* Smooth transitions */
-html { scroll-behavior: smooth; }
-*{ margin:0; padding:0; box-sizing:border-box; font-family:"Poppins", sans-serif; }
+  html { scroll-behavior: smooth; }
+  *{ margin:0; padding:0; box-sizing:border-box; font-family:"Poppins", sans-serif; }
+  body{ background:#e3f2fd; color:#0d1b2a; line-height:1.7; }
+  header{ background:#0d47a1; padding:25px 20px; text-align:center; color:#ffffff; border-bottom:5px solid #1976d2; position:relative; }
+  .logo{ position:absolute; left:20px; top:20px; width:80px; height:80px; border-radius:50%; background:#64b5f6; display:flex; align-items:center; justify-content:center; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.2); }
+  .logo img{ width:100%; height:100%; object-fit:cover; cursor:pointer; transition:0.3s; }
+  .logo img:hover{ transform:scale(1.1); }
+  header h1{ font-size:34px; margin-bottom:10px; color:white; }
+  .banner{ font-size:20px; color:#e3f2fd; }
+  nav{ margin-top:15px; }
+  nav a { color:white; margin:0 15px; text-decoration:none; font-weight:600; transition:0.3s; cursor: pointer; }
+  nav a:hover{ color:#90caf9; }
+  
+  section{ width:90%; max-width:1000px; margin:40px auto; padding:30px; background:white; border-radius:12px; box-shadow:0 5px 20px rgba(0,0,0,0.1); }
+  section h2{ font-size:28px; margin-bottom:20px; color:#0d47a1; text-align: center; }
+  section h3.sub-group-title { text-align: center; color: #1565c0; margin-top: 30px; font-size: 24px; text-transform: uppercase; }
+  section p{ margin-bottom:15px; font-size:16px; }
 
-body{ background:#e3f2fd; color:#0d1b2a; line-height:1.7; }
+  .card-container{ display:flex; flex-wrap:wrap; gap:20px; justify-content: center; margin-top:20px; }
 
-header{
-  background:#0d47a1; padding:25px 20px; text-align:center; color:#ffffff;
-  border-bottom:5px solid #1976d2; position:relative;
-}
+  /* Сетка 2x2 для Exam Format и Community */
+  .grid-2x2 .card { flex: 0 1 calc(50% - 20px); min-width: 280px; }
 
-.logo{
-  position:absolute; left:20px; top:20px; width:80px; height:80px;
-  border-radius:50%; background:#64b5f6; display:flex; align-items:center;
-  justify-content:center; overflow:hidden; box-shadow:0 5px 15px rgba(0,0,0,0.2);
-}
+  /* Сетка 3x3 для Materials и Tips */
+  .grid-3x3 .card { flex: 0 1 calc(33.333% - 20px); min-width: 250px; }
 
-.logo img{ width:100%; height:100%; object-fit:cover; cursor:pointer; transition:0.3s; }
-.logo img:hover{ transform:scale(1.1); }
+  .card{ background:#bbdefb; border-radius:12px; padding:20px; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition:0.3s; text-align: center; }
+  .card:hover{ transform:scale(1.05); }
+  .card h3{ font-size:18px; color:#0d47a1; margin-bottom:10px; }
+  
+  .btn-action, .btn-download, .btn-social { padding: 10px 20px; background: #0d47a1; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; text-decoration: none; display: inline-block; transition: 0.3s; margin-top: 10px; }
+  .btn-download { background: #2e7d32; font-size: 14px; }
+  .btn-download:hover { background: #388e3c; transform: translateY(-2px); }
+  .btn-social { background: #ff0050; width: 100%; }
+  .btn-social.tg { background: #0088cc; }
+  
+  .hidden { display: none; }
+  footer{ text-align:center; padding:25px; background:#0d47a1; color:white; margin-top:40px; border-top:5px solid #1976d2; }
 
-header h1{ font-size:34px; margin-bottom:10px; color:white; }
-.banner{ font-size:20px; color:#e3f2fd; }
-
-nav{ margin-top:15px; }
-nav a {
-  color:white; margin:0 15px; text-decoration:none; font-weight:600;
-  transition:0.3s; cursor: pointer;
-}
-nav a:hover{ color:#90caf9; }
-
-/* Main content sections */
-section{
-  width:90%; max-width:1000px; margin:40px auto; padding:30px;
-  background:white; border-radius:12px; box-shadow:0 5px 20px rgba(0,0,0,0.1);
-}
-
-section h2{ font-size:28px; margin-bottom:20px; color:#0d47a1; }
-section h3.sub-group-title {
-  text-align: center; color: #1565c0; margin-top: 30px; font-size: 24px; text-transform: uppercase;
-}
-
-section p{ margin-bottom:15px; font-size:16px; }
-
-.card-container{ 
-  display:flex; 
-  flex-wrap:wrap; 
-  gap:20px; 
-  justify-content: center; /* Центрируем карточки в ряду */
-  margin-top:20px; 
-}
-
-/* Настройка для 3-х карточек в ряд */
-.card{
-  flex: 0 1 calc(33.333% - 20px); /* Ровно треть ширины минус отступы */
-  min-width: 250px; /* Чтобы на маленьких экранах не сжимались слишком сильно */
-  background:#bbdefb; 
-  border-radius:12px; 
-  padding:20px;
-  box-shadow:0 5px 15px rgba(0,0,0,0.2); 
-  transition:0.3s; 
-  text-align: center;
-}
-
-.card:hover{ transform:scale(1.05); }
-.card h3{ font-size:18px; color:#0d47a1; margin-bottom:10px; }
-
-/* Buttons */
-.btn-action, .btn-download, .btn-social {
-  padding: 10px 20px; background: #0d47a1; color: white; border: none;
-  border-radius: 8px; cursor: pointer; font-weight: 600; text-decoration: none;
-  display: inline-block; transition: 0.3s; margin-top: 10px;
-}
-.btn-action:hover { background: #1976d2; transform: translateY(-2px); }
-
-.btn-download { background: #2e7d32; font-size: 14px; }
-.btn-download:hover { background: #388e3c; transform: translateY(-2px); }
-
-.btn-social { background: #ff0050; width: 100%; }
-.btn-social.tg { background: #0088cc; }
-.btn-social:hover { opacity: 0.9; transform: translateY(-2px); }
-
-/* Hidden class for tab switching */
-.hidden { display: none; }
-
-footer{
-  text-align:center; padding:25px; background:#0d47a1; color:white;
-  margin-top:40px; font-size:16px; border-top:5px solid #1976d2;
-}
-
-/* Адаптивность для мобильных устройств */
-@media(max-width:900px){
-  .card { flex: 0 1 calc(50% - 20px); } /* 2 в ряд на планшетах */
-}
-
-@media(max-width:600px){
-  .card { flex: 0 1 100%; } /* 1 в ряд на телефонах */
-  nav a{ display:block; margin:8px 0; }
-  .logo { position: relative; left: 0; top: 0; margin: 0 auto 15px; }
-}
+  @media(max-width:768px){
+    .grid-2x2 .card, .grid-3x3 .card { flex: 0 1 100%; }
+    nav a{ display:block; margin:8px 0; }
+    .logo { position: relative; left: 0; top: 0; margin: 0 auto 15px; }
+  }
 </style>
 </head>
-
 <body>
 
 <header>
-<div class="logo"><img src="logo1.png" alt="Qadam English Logo"></div>
-<h1>Qadam English — IELTS Preparation Course</h1>
-<div class="banner">Master IELTS with Qadam English</div>
-<nav>
-<a onclick="showTab('main')">Course Info</a>
-<a onclick="showTab('files')">Materials</a>
-<a onclick="showTab('community')">Community</a>
-</nav>
+  <div class="logo"><img src="logo1.png" alt="Qadam English Logo"></div>
+  <h1>Qadam English — IELTS Preparation Course</h1>
+  <div class="banner">Master IELTS with Qadam English</div>
+  <nav>
+    <a onclick="showTab('main')">Course Info</a>
+    <a onclick="showTab('files')">Materials</a>
+    <a onclick="showTab('community')">Community</a>
+  </nav>
 </header>
 
 <div id="main-content">
     <section id="course">
-    <h2>About Qadam English Course</h2>
-    <p>Qadam English is a professional IELTS preparation course designed to help students achieve high band scores. Our program focuses on developing all four IELTS skills: Listening, Reading, Writing, and Speaking.</p>
+      <h2>About Qadam English Course</h2>
+      <p>Qadam English is a professional IELTS preparation course designed to help students achieve high band scores. Our program focuses on developing all four IELTS skills: Listening, Reading, Writing, and Speaking. We provide structured lessons, real exam strategies, and personalized feedback to support every learner.</p>
+      <p>Our goal is to guide students step by step toward academic and career success through strong English proficiency and confident exam performance.</p>
     </section>
 
     <section id="about">
-    <h2>What is IELTS?</h2>
-    <p>IELTS is a globally recognized English proficiency exam required for studying abroad and immigration.</p>
+      <h2>What is IELTS?</h2>
+      <p>IELTS (International English Language Testing System) is a globally recognized English proficiency exam. It evaluates your ability to communicate in English across four skills: Listening, Reading, Writing, and Speaking.</p>
+      <p>IELTS is required for studying abroad, international careers, and immigration to English-speaking countries.</p>
     </section>
 
     <section id="format">
-    <h2>Exam Format</h2>
-    <div class="card-container">
-    <div class="card"><h3>Listening</h3><p>Understanding spoken English (40 mins).</p></div>
-    <div class="card"><h3>Reading</h3><p>Academic and general texts (60 mins).</p></div>
-    <div class="card"><h3>Writing</h3><p>Organizing ideas clearly (60 mins).</p></div>
-    </div>
+      <h2>Exam Format</h2>
+      <div class="card-container grid-2x2">
+        <div class="card"><h3>Listening</h3><p>Understanding spoken English (40 mins).</p></div>
+        <div class="card"><h3>Reading</h3><p>Academic and general texts (60 mins).</p></div>
+        <div class="card"><h3>Writing</h3><p>Organizing ideas clearly (60 mins).</p></div>
+        <div class="card"><h3>Speaking</h3><p>Face-to-face interview (11-14 mins).</p></div>
+      </div>
+    </section>
+
+    <section id="tips">
+        <h2>Preparation Tips</h2>
+        <div class="card-container grid-3x3">
+            <div class="card"><h3>Practice Consistently</h3><p>Train all skills daily.</p></div>
+            <div class="card"><h3>Take Practice Tests</h3><p>Simulate exam conditions.</p></div>
+            <div class="card"><h3>Speak Often</h3><p>Increase fluency in daily life.</p></div>
+        </div>
     </section>
 
     <section style="text-align: center;">
@@ -152,8 +106,10 @@ footer{
 
 <div id="files-content" class="hidden">
     <section>
-        <h2 style="text-align: center;">CAMBRIDGE PRACTICE TESTS FOR IELTS</h2>
-        <div class="card-container">
+        <h2>Student Resources</h2>
+        <p>Access these materials to boost your preparation.</p>
+        <h3 class="sub-group-title">Cambridge Practice Tests for IELTS</h3>
+        <div class="card-container grid-3x3">
             <div class="card"><h3>IELTS 1</h3><a href="IELTS 1.pdf" class="btn-download" download>Download</a></div>
             <div class="card"><h3>IELTS 2</h3><a href="IELTS 2.pdf" class="btn-download" download>Download</a></div>
             <div class="card"><h3>IELTS 3</h3><a href="IELTS 3.pdf" class="btn-download" download>Download</a></div>
@@ -176,44 +132,42 @@ footer{
 <div id="community-content" class="hidden">
     <section>
         <h2>Join Our Community</h2>
-        <div class="card-container">
+        <p>Follow us for daily tips, interactive content, and exam updates.</p>
+        <div class="card-container grid-2x2">
             <div class="card">
                 <h3>TikTok</h3>
+                <p>Short tips and motivation</p>
                 <a href="https://www.tiktok.com/@qadam_english" target="_blank" class="btn-social">Open TikTok</a>
             </div>
             <div class="card">
                 <h3>Telegram</h3>
+                <p>Exclusive materials & chat</p>
                 <a href="https://t.me/qadam_english" target="_blank" class="btn-social tg">Join Telegram</a>
             </div>
         </div>
     </section>
 </div>
 
-<footer>
-<p>© 2026 Qadam English — IELTS Course</p>
-</footer>
+<footer><p>© 2026 Qadam English — IELTS Course</p></footer>
 
 <script>
 function showTab(tabName) {
     document.getElementById('main-content').classList.add('hidden');
     document.getElementById('files-content').classList.add('hidden');
     document.getElementById('community-content').classList.add('hidden');
-    
-    if(tabName === 'main') {
-        document.getElementById('main-content').classList.remove('hidden');
-    } else if(tabName === 'files') {
-        document.getElementById('files-content').classList.remove('hidden');
-    } else if(tabName === 'community') {
-        document.getElementById('community-content').classList.remove('hidden');
-    }
+    document.getElementById(tabName + '-content').classList.remove('hidden');
 }
 
 function getNewTip() {
-    const tips = ["Learn 5 synonyms daily.", "Practice speaking with a timer.", "Read English news daily."];
-    const randomIndex = Math.floor(Math.random() * tips.length);
-    document.getElementById('quote-display').innerText = tips[randomIndex];
+    const tips = [
+        "Focus on Task 2—it's worth more marks.",
+        "Read English news to improve vocabulary.",
+        "Practice speaking with a timer.",
+        "Listen for keywords in the Listening test.",
+        "Learn 5 synonyms daily."
+    ];
+    document.getElementById('quote-display').innerText = tips[Math.floor(Math.random() * tips.length)];
 }
 </script>
-
 </body>
 </html>
