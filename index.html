@@ -19,14 +19,13 @@
   header h1{ font-size:34px; margin-bottom:10px; color:white; }
   .banner{ font-size:20px; color:#e3f2fd; }
 
-  /* Навигация под синим фоном */
   .tabs-container {
     display: flex;
     justify-content: center;
     gap: 15px;
     padding: 20px 0;
-    background: #e3f2fd; /* Цвет фона страницы */
-    margin-top: -30px; /* Немного наезжаем на синий фон для стиля, если нужно */
+    background: #e3f2fd;
+    margin-top: -30px;
     position: relative;
     z-index: 10;
   }
@@ -57,11 +56,28 @@
 
   section{ width:90%; max-width:1000px; margin:20px auto 40px; padding:30px; background:white; border-radius:12px; box-shadow:0 5px 20px rgba(0,0,0,0.1); }
   section h2{ font-size:28px; margin-bottom:20px; color:#0d47a1; text-align: center; }
-  section h3.sub-group-title { text-align: center; color: #1565c0; margin-top: 30px; font-size: 24px; text-transform: uppercase; }
+  
+  /* Стиль для выделенных блоков с тестами */
+  .test-group-box {
+    border: 2px solid #bbdefb;
+    background: #f1f8ff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+  }
+  
+  .sub-group-title { 
+    text-align: center; 
+    color: #0d47a1; 
+    margin-bottom: 20px; 
+    font-size: 22px; 
+    font-weight: 700;
+    text-transform: uppercase; 
+  }
+
   section p{ margin-bottom:15px; font-size:16px; }
 
   .card-container{ display:flex; flex-wrap:wrap; gap:20px; justify-content: center; margin-top:20px; }
-
   .grid-2x2 .card { flex: 0 1 calc(50% - 20px); min-width: 280px; }
   .grid-3x3 .card { flex: 0 1 calc(33.333% - 20px); min-width: 250px; }
 
@@ -107,13 +123,6 @@
     <section id="course">
       <h2>About Qadam English Course</h2>
       <p>Qadam English is a professional IELTS preparation course designed to help students achieve high band scores. Our program focuses on developing all four IELTS skills: Listening, Reading, Writing, and Speaking. We provide structured lessons, real exam strategies, and personalized feedback to support every learner.</p>
-      <p>Our goal is to guide students step by step toward academic and career success through strong English proficiency and confident exam performance.</p>
-    </section>
-
-    <section id="about">
-      <h2>What is IELTS?</h2>
-      <p>IELTS (International English Language Testing System) is a globally recognized English proficiency exam. It evaluates your ability to communicate in English across four skills: Listening, Reading, Writing, and Speaking.</p>
-      <p>IELTS is required for studying abroad, international careers, and immigration to English-speaking countries.</p>
     </section>
 
     <section id="format">
@@ -124,15 +133,6 @@
         <div class="card"><h3>Writing</h3><p>Organizing ideas clearly (60 mins).</p></div>
         <div class="card"><h3>Speaking</h3><p>Face-to-face interview (11-14 mins).</p></div>
       </div>
-    </section>
-
-    <section id="tips">
-        <h2>Preparation Tips</h2>
-        <div class="card-container grid-3x3">
-            <div class="card"><h3>Practice Consistently</h3><p>Train all skills daily.</p></div>
-            <div class="card"><h3>Take Practice Tests</h3><p>Simulate exam conditions.</p></div>
-            <div class="card"><h3>Speak Often</h3><p>Increase fluency in daily life.</p></div>
-        </div>
     </section>
 
     <section style="text-align: center;">
@@ -146,23 +146,40 @@
     <section>
         <h2>Student Resources</h2>
         <p>Access these materials to boost your preparation.</p>
-        <h3 class="sub-group-title">Cambridge Practice Tests for IELTS</h3>
-        <div class="card-container grid-3x3">
-            <div class="card"><h3>IELTS 1</h3><a href="IELTS 1.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 2</h3><a href="IELTS 2.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 3</h3><a href="IELTS 3.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 4</h3><a href="IELTS 4.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 5</h3><a href="IELTS 5.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 6</h3><a href="IELTS 6.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 7</h3><a href="IELTS 7.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 8</h3><a href="IELTS 8.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 9</h3><a href="IELTS 9.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 10</h3><a href="IELTS 10.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 11</h3><a href="IELTS 11.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 12</h3><a href="IELTS 12.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 13</h3><a href="IELTS 13.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 14</h3><a href="IELTS 14.pdf" class="btn-download" download>Download</a></div>
-            <div class="card"><h3>IELTS 15</h3><a href="IELTS 15.pdf" class="btn-download" download>Download</a></div>
+        
+        <div class="test-group-box">
+            <h3 class="sub-group-title">Cambridge Practice Tests for IELTS</h3>
+            <div class="card-container grid-3x3">
+                <div class="card"><h3>IELTS 1</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 2</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 3</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 4</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 5</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 6</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 7</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 8</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 9</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 10</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 11</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 12</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 13</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 14</h3><a href="#" class="btn-download">Download</a></div>
+                <div class="card"><h3>IELTS 15</h3><a href="#" class="btn-download">Download</a></div>
+            </div>
+        </div>
+
+        <div class="test-group-box">
+            <h3 class="sub-group-title">Makkar IELTS TASKS</h3>
+            <div class="card-container grid-2x2">
+                <div class="card">
+                    <h3>Makkar IELTS TASK 1</h3>
+                    <a href="https://drive.google.com/uc?export=download&id=1iOd45YyH1LVWTW5qRI0WSPxRivRI83_l" class="btn-download">Download</a>
+                </div>
+                <div class="card">
+                    <h3>Makkar IELTS TASK 2</h3>
+                    <a href="https://drive.google.com/uc?export=download&id=1KqR9_tAtApXVWmX0__RqbpfrzRHxKrgR" class="btn-download">Download</a>
+                </div>
+            </div>
         </div>
     </section>
 </div>
@@ -174,17 +191,14 @@
         <div class="card-container grid-3x3">
             <div class="card">
                 <h3>TikTok</h3>
-                <p>Short tips and motivation</p>
                 <a href="https://www.tiktok.com/@qadam_english" target="_blank" class="btn-social">Open TikTok</a>
             </div>
             <div class="card">
                 <h3>Instagram</h3>
-                <p>Daily IELTS tips & motivation</p>
                 <a href="https://www.instagram.com/qadam.eng1ish" target="_blank" class="btn-social ig">Open Instagram</a>
             </div>
             <div class="card">
                 <h3>Telegram</h3>
-                <p>Exclusive materials & chat</p>
                 <a href="https://t.me/qadam_english" target="_blank" class="btn-social tg">Join Telegram</a>
             </div>
         </div>
