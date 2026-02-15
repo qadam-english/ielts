@@ -79,6 +79,8 @@
   .card-container{ display:flex; flex-wrap:wrap; gap:20px; justify-content: center; margin-top:20px; }
   .grid-2x2 .card { flex: 0 1 calc(50% - 20px); min-width: 280px; }
   .grid-3x3 .card { flex: 0 1 calc(33.333% - 20px); min-width: 250px; }
+  /* Стиль для отображения по одному в ряд */
+  .grid-full .card { flex: 0 1 100%; }
 
   .card{ background:#bbdefb; border-radius:12px; padding:20px; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition:0.3s; text-align: center; }
   .card:hover{ transform:scale(1.05); }
@@ -97,7 +99,7 @@
   footer{ text-align:center; padding:25px; background:#0d47a1; color:white; margin-top:40px; border-top:5px solid #1976d2; }
 
   @media(max-width:768px){
-    .grid-2x2 .card, .grid-3x3 .card { flex: 0 1 100%; }
+    .grid-2x2 .card, .grid-3x3 .card, .grid-full .card { flex: 0 1 100%; }
     .tabs-container { gap: 8px; flex-wrap: wrap; padding: 10px; margin-top: 0; }
     .tabs-container a { flex: 1; text-align: center; font-size: 14px; padding: 10px 5px; }
     .logo { position: relative; left: 0; top: 0; margin: 0 auto 15px; }
@@ -196,6 +198,28 @@
         </div>
 
         <div class="test-group-box">
+            <h3 class="sub-group-title">Writing Tasks</h3>
+            <div class="card-container grid-2x2">
+                <div class="card">
+                    <h3>Writing Samples By R. Mitchell</h3>
+                    <a href="Samples by Rachel Mitchell.pdf" class="btn-download" download>Download</a>
+                </div>
+                <div class="card">
+                    <h3>Task 1, 2 by Simon Braveman</h3>
+                    <a href="W_Tasks by Simon Braveman.pdf" class="btn-download" download>Download</a>
+                </div>
+                <div class="card">
+                    <h3>GET IELTS BAND 9, TASK 1</h3>
+                    <a href="band_9_task1.pdf" class="btn-download" download>Download</a>
+                </div>
+                <div class="card">
+                    <h3>GET IELTS BAND 9, TASK 2</h3>
+                    <a href="band_9_task2.pdf" class="btn-download" download>Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-group-box">
             <h3 class="sub-group-title">Makkar IELTS TASKS</h3>
             <div class="card-container grid-2x2">
                 <div class="card">
@@ -219,6 +243,31 @@
                 <div class="card">
                     <h3>Vol 2</h3>
                     <a href="https://drive.google.com/uc?export=download&id=1r2pHmHru7rwDVayLBcgkxBnupqhcNPIH" class="btn-download">Download</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-group-box">
+            <div class="card-container grid-full">
+                <div class="card">
+                    <h3>IELTS Secret keys</h3>
+                    <a href="IELTS Secret keys.pdf" class="btn-download" download>Download</a>
+                </div>
+                <div class="card">
+                    <h3>IELTS Reading Strategies By Rachel Mitchel</h3>
+                    <a href="IELTS Reading Strategies By Rachel Mitchel.pdf" class="btn-download" download>Download</a>
+                </div>
+                <div class="card">
+                    <h3>Sample Paragraphs Band 6-8</h3>
+                    <a href="Sample Paragraphs Band 6-8.pdf" class="btn-download" download>Download</a>
+                </div>
+                <div class="card">
+                    <h3>Kiran Makkar’s Speaking Guesswork</h3>
+                    <a href="Makkar_Speaking_Cue_Cards_September_December_2024_ieltsxpress.pdf" class="btn-download" download>Download</a>
+                </div>
+                <div class="card">
+                    <h3>Writing Vocabulary Task</h3>
+                    <a href="IELTS-writing-task-1-vocabulary.pdf" class="btn-download" download>Download</a>
                 </div>
             </div>
         </div>
