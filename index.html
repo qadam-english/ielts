@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Qadam English — IELTS Course</title>
+<title>Qadam English — IELTS</title>
 <link rel="icon" type="image/png" href="logo2.png">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -79,7 +79,6 @@
   .card-container{ display:flex; flex-wrap:wrap; gap:20px; justify-content: center; margin-top:20px; }
   .grid-2x2 .card { flex: 0 1 calc(50% - 20px); min-width: 280px; }
   .grid-3x3 .card { flex: 0 1 calc(33.333% - 20px); min-width: 250px; }
-  /* Стиль для отображения по одному в ряд */
   .grid-full .card { flex: 0 1 100%; }
 
   .card{ background:#bbdefb; border-radius:12px; padding:20px; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition:0.3s; text-align: center; }
@@ -110,40 +109,16 @@
 
 <header>
   <div class="logo"><img src="logo2.png" alt="Qadam English Logo"></div>
-  <h1>Qadam English — IELTS Preparation Course</h1>
+  <h1>Qadam English — IELTS Preparation</h1>
   <div class="banner">Master IELTS with Qadam English</div>
 </header>
 
 <nav class="tabs-container">
-    <a onclick="showTab('main', this)" class="active">Course Info</a>
-    <a onclick="showTab('files', this)">Materials</a>
+    <a onclick="showTab('files', this)" class="active">Materials</a>
     <a onclick="showTab('community', this)">Community</a>
 </nav>
 
-<div id="main-content">
-    <section id="course">
-      <h2>About Qadam English Course</h2>
-      <p>Qadam English is a professional IELTS preparation course designed to help students achieve high band scores. Our program focuses on developing all four IELTS skills: Listening, Reading, Writing, and Speaking. We provide structured lessons, real exam strategies, and personalized feedback to support every learner.</p>
-    </section>
-
-    <section id="format">
-      <h2>Exam Format</h2>
-      <div class="card-container grid-2x2">
-        <div class="card"><h3>Listening</h3><p>Understanding spoken English (40 mins).</p></div>
-        <div class="card"><h3>Reading</h3><p>Academic and general texts (60 mins).</p></div>
-        <div class="card"><h3>Writing</h3><p>Organizing ideas clearly (60 mins).</p></div>
-        <div class="card"><h3>Speaking</h3><p>Face-to-face interview (11-14 mins).</p></div>
-      </div>
-    </section>
-
-    <section style="text-align: center;">
-        <h2>Daily IELTS Motivation</h2>
-        <p id="quote-display" style="font-weight: 600; font-style: italic;">Click to get advice!</p>
-        <button class="btn-action" onclick="getNewTip()">Get Advice</button>
-    </section>
-</div>
-
-<div id="files-content" class="hidden">
+<div id="files-content">
     <section>
         <h2>Student Resources</h2>
         <p>Access these materials to boost your preparation.</p>
@@ -298,7 +273,10 @@
 
 <script>
 function showTab(tabName, element) {
-    document.getElementById('main-content').classList.add('hidden');
+    // Скрываем все возможные блоки (включая закомментированный main, если его включите)
+    const mainContent = document.getElementById('main-content');
+    if(mainContent) mainContent.classList.add('hidden');
+    
     document.getElementById('files-content').classList.add('hidden');
     document.getElementById('community-content').classList.add('hidden');
     
@@ -318,7 +296,8 @@ function getNewTip() {
         "Listen for keywords in the Listening test.",
         "Learn 5 synonyms daily."
     ];
-    document.getElementById('quote-display').innerText = tips[Math.floor(Math.random() * tips.length)];
+    const display = document.getElementById('quote-display');
+    if(display) display.innerText = tips[Math.floor(Math.random() * tips.length)];
 }
 </script>
 </body>
