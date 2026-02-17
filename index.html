@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -97,6 +98,13 @@
   .hidden { display: none; }
   footer{ text-align:center; padding:25px; background:#0d47a1; color:white; margin-top:40px; border-top:5px solid #1976d2; }
 
+  /* Стили для практики */
+  .timer-box { position: sticky; top: 10px; right: 10px; background: #d32f2f; color: white; padding: 10px 20px; border-radius: 50px; font-weight: bold; font-size: 20px; z-index: 100; display: inline-block; margin-bottom: 20px; }
+  .reading-text { background: #f9f9f9; padding: 20px; border-left: 5px solid #0d47a1; margin-bottom: 20px; font-style: normal; }
+  .question-item { margin-bottom: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px; }
+  .question-item input { margin-right: 10px; }
+  .result-msg { font-size: 24px; font-weight: bold; color: #2e7d32; text-align: center; }
+
   @media(max-width:768px){
     .grid-2x2 .card, .grid-3x3 .card, .grid-full .card { flex: 0 1 100%; }
     .tabs-container { gap: 8px; flex-wrap: wrap; padding: 10px; margin-top: 0; }
@@ -115,6 +123,7 @@
 
 <nav class="tabs-container">
     <a onclick="showTab('files', this)" class="active">Materials</a>
+    <a onclick="showTab('practice', this)">Practice</a>
     <a onclick="showTab('community', this)">Community</a>
 </nav>
 
@@ -249,6 +258,94 @@
     </section>
 </div>
 
+<div id="practice-content" class="hidden">
+    <section id="test-selector">
+        <h2>IELTS Practice Zone</h2>
+        <p style="text-align: center;">Choose your test type and version to start practicing.</p>
+        
+        <div class="test-group-box">
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                <div style="flex: 1; min-width: 250px;">
+                    <label><b>Select Test Type:</b></label>
+                    <select id="test-type" style="width: 100%; padding: 10px; border-radius: 5px; margin-top: 5px;">
+                        <option value="reading">IELTS Reading</option>
+                    </select>
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <label><b>Select Variant:</b></label>
+                    <select id="test-variant" style="width: 100%; padding: 10px; border-radius: 5px; margin-top: 5px;">
+                        <option value="0">Variant 0 (Sample)</option>
+                    </select>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button class="btn-action" onclick="startTest()">Start Test</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="test-interface" class="hidden">
+        <div style="text-align: center;">
+            <div id="timer" class="timer-box">20:00</div>
+        </div>
+        
+        <div class="reading-text">
+            <h3>Reading Passage: The Future of AI</h3>
+            <p>Artificial Intelligence (AI) is transforming the way we live and work. From self-driving cars to advanced medical diagnostics, AI's potential seems limitless. However, many experts express concerns about ethical implications and job displacement. Research suggests that while AI may replace some manual tasks, it will also create new roles that require human creativity and emotional intelligence. Understanding this balance is crucial for future development.</p>
+        </div>
+
+        <div id="questions-container">
+            <div class="question-item">
+                <p><b>1. According to the text, what is one major benefit of AI?</b></p>
+                <input type="radio" name="q1" value="a"> A) It removes all ethical concerns.<br>
+                <input type="radio" name="q1" value="b"> B) Advanced medical diagnostics.<br>
+                <input type="radio" name="q1" value="c"> C) Total elimination of job displacement.<br>
+                <input type="radio" name="q1" value="d"> D) It only affects manual labor roles.<br>
+            </div>
+            <div class="question-item">
+                <p><b>2. What skills will be required for the new roles created by AI?</b></p>
+                <input type="radio" name="q2" value="a"> A) Basic mechanical skills.<br>
+                <input type="radio" name="q2" value="b"> B) Ability to work without breaks.<br>
+                <input type="radio" name="q2" value="c"> C) Human creativity and emotional intelligence.<br>
+                <input type="radio" name="q2" value="d"> D) Superior speed in data entry.<br>
+            </div>
+            <div class="question-item">
+                <p><b>3. What is the main concern expressed by experts regarding AI?</b></p>
+                <input type="radio" name="q3" value="a"> A) Lack of speed.<br>
+                <input type="radio" name="q3" value="b"> B) Ethical implications and jobs.<br>
+                <input type="radio" name="q3" value="c"> C) Cost of implementation.<br>
+                <input type="radio" name="q3" value="d"> D) Limited diagnostic abilities.<br>
+            </div>
+            <div class="question-item">
+                <p><b>4. How does AI impact manual tasks according to the passage?</b></p>
+                <input type="radio" name="q4" value="a"> A) It has no impact on them.<br>
+                <input type="radio" name="q4" value="b"> B) It makes them harder.<br>
+                <input type="radio" name="q4" value="c"> C) It replaces some of them.<br>
+                <input type="radio" name="q4" value="d"> D) It increases the need for them.<br>
+            </div>
+            <div class="question-item">
+                <p><b>5. What is considered "crucial" for future development?</b></p>
+                <input type="radio" name="q5" value="a"> A) Ignoring the balance between tasks.<br>
+                <input type="radio" name="q5" value="b"> B) Understanding the balance of AI and human roles.<br>
+                <input type="radio" name="q5" value="c"> C) Accelerating job displacement.<br>
+                <input type="radio" name="q5" value="d"> D) Disabling diagnostic tools.<br>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <button class="btn-action" style="background: #2e7d32;" onclick="finishTest()">Finish Test</button>
+        </div>
+    </section>
+
+    <section id="test-result" class="hidden">
+        <h2>Test Completed!</h2>
+        <div id="score-display" class="result-msg"></div>
+        <div style="text-align: center; margin-top: 20px;">
+            <button class="btn-action" onclick="resetPractice()">Back to Selection</button>
+        </div>
+    </section>
+</div>
+
 <div id="community-content" class="hidden">
     <section>
         <h2>Join Our Community</h2>
@@ -273,12 +370,12 @@
 
 <script>
 function showTab(tabName, element) {
-    // Скрываем все возможные блоки (включая закомментированный main, если его включите)
     const mainContent = document.getElementById('main-content');
     if(mainContent) mainContent.classList.add('hidden');
     
     document.getElementById('files-content').classList.add('hidden');
     document.getElementById('community-content').classList.add('hidden');
+    document.getElementById('practice-content').classList.add('hidden');
     
     document.getElementById(tabName + '-content').classList.remove('hidden');
 
@@ -288,16 +385,47 @@ function showTab(tabName, element) {
     element.classList.add('active');
 }
 
-function getNewTip() {
-    const tips = [
-        "Focus on Task 2—it's worth more marks.",
-        "Read English news to improve vocabulary.",
-        "Practice speaking with a timer.",
-        "Listen for keywords in the Listening test.",
-        "Learn 5 synonyms daily."
-    ];
-    const display = document.getElementById('quote-display');
-    if(display) display.innerText = tips[Math.floor(Math.random() * tips.length)];
+let timeLeft = 1200; 
+let timerInterval;
+
+function startTest() {
+    document.getElementById('test-selector').classList.add('hidden');
+    document.getElementById('test-interface').classList.remove('hidden');
+    timeLeft = 1200;
+    updateTimerDisplay();
+    timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerDisplay();
+        if (timeLeft <= 0) finishTest();
+    }, 1000);
+}
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById('timer').innerText = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+}
+
+function finishTest() {
+    clearInterval(timerInterval);
+    let score = 0;
+    const answers = { q1: 'b', q2: 'c', q3: 'b', q4: 'c', q5: 'b' };
+    
+    for (let q in answers) {
+        const selected = document.querySelector(`input[name="${q}"]:checked`);
+        if (selected && selected.value === answers[q]) score++;
+    }
+    
+    document.getElementById('test-interface').classList.add('hidden');
+    document.getElementById('test-result').classList.remove('hidden');
+    document.getElementById('score-display').innerText = `Your Score: ${score} / 5`;
+}
+
+function resetPractice() {
+    document.getElementById('test-result').classList.add('hidden');
+    document.getElementById('test-selector').classList.remove('hidden');
+    document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
 }
 </script>
 </body>
