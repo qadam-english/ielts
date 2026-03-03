@@ -127,12 +127,70 @@
   .question-item { margin-bottom: 20px; padding: 15px; background: #e3f2fd; border-radius: 8px; }
   .question-item input { margin-right: 10px; }
   .result-msg { font-size: 24px; font-weight: bold; color: #2e7d32; text-align: center; }
+  .practice-meta { text-align:center; color:#0d47a1; font-weight:600; margin-top:10px; }
+  .practice-progress { text-align:center; color:#0d47a1; font-weight:600; margin: 10px 0 20px; }
+  .answer-review { margin-top: 20px; display: grid; gap: 10px; }
+  .answer-review-item { background:#e3f2fd; border-radius:8px; padding:10px 14px; }
+  .answer-review-item.correct { border-left: 5px solid #2e7d32; }
+  .answer-review-item.wrong { border-left: 5px solid #d32f2f; }
+
+  .resources-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0 10px;
+  }
+
+  .resources-toolbar input {
+    min-width: 280px;
+    max-width: 480px;
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #bbdefb;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+
+  .resources-meta {
+    text-align: center;
+    color: #0d47a1;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .to-top {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: #0d47a1;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .to-top.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .to-top:hover { transform: translateY(-3px); }
 
   @media(max-width:768px){
     .grid-2x2 .card, .grid-3x3 .card, .grid-full .card { flex: 0 1 100%; }
     .tabs-container { gap: 8px; flex-wrap: wrap; padding: 10px; margin-top: 0; }
     .tabs-container a { flex: 1; text-align: center; font-size: 14px; padding: 10px 5px; }
     .logo { position: relative; left: 0; top: 0; margin: 0 auto 15px; }
+    .resources-toolbar input { min-width: 0; }
     
     /* На мобилках возвращаем колонку в обычный вид */
     .test-layout { flex-direction: column; }
@@ -149,15 +207,21 @@
 </header>
 
 <nav class="tabs-container">
-    <a onclick="showTab('files', this)" class="active">Materials</a>
-    <a onclick="showTab('practice', this)">Practice</a>
-    <a onclick="showTab('community', this)">Community</a>
+    <a data-tab="files" onclick="showTab('files', this)" class="active">Materials</a>
+    <a data-tab="practice" onclick="showTab('practice', this)">Practice</a>
+    <a data-tab="community" onclick="showTab('community', this)">Community</a>
 </nav>
 
 <div id="files-content">
     <section>
         <h2>Student Resources</h2>
         <p>Access these materials to boost your preparation.</p>
+
+        <div class="resources-toolbar">
+            <input id="resource-search" type="text" placeholder="Quick search (e.g. writing, IELTS 12, speaking)" oninput="filterMaterials()">
+            <button class="btn-action" onclick="clearMaterialSearch()">Clear</button>
+        </div>
+        <div id="resource-count" class="resources-meta">Showing all resources</div>
         
         <div class="test-group-box">
             <h3 class="sub-group-title">Cambridge Practice Tests for IELTS</h3>
@@ -262,11 +326,11 @@
             <div class="card-container grid-full">
                 <div class="card">
                     <h3>IELTS Secret keys</h3>
-                    <a href="IELTS Secret keys.pdf" class="btn-download" download>Download</a>
+                    <a href="IELTS Secret keys .pdf" class="btn-download" download>Download</a>
                 </div>
                 <div class="card">
-                    <h3>IELTS Reading Strategies By Rachel Mitchel</h3>
-                    <a href="IELTS Reading Strategies By Rachel Mitchel.pdf" class="btn-download" download>Download</a>
+                    <h3>IELTS Reading Strategies By Rachel Mitchell</h3>
+                    <a href="IELTS Reading Strategies By Rachel Mitchell.pdf" class="btn-download" download>Download</a>
                 </div>
                 <div class="card">
                     <h3>Sample Paragraphs Band 6-8</h3>
@@ -289,6 +353,7 @@
     <section id="test-selector">
         <h2>IELTS Practice Zone</h2>
         <p style="text-align: center;">Choose your test type and version to start practicing.</p>
+        <div id="best-score" class="practice-meta">Best score: —</div>
         
         <div class="test-group-box">
             <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
@@ -304,6 +369,14 @@
                         <option value="0">Variant 0 (Sample)</option>
                     </select>
                 </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <label><b>Test Duration:</b></label>
+                    <select id="test-duration" style="width: 100%; padding: 10px; border-radius: 5px; margin-top: 5px;">
+                        <option value="20" selected>20 minutes</option>
+                        <option value="40">40 minutes</option>
+                        <option value="60">60 minutes</option>
+                    </select>
+                </div>
             </div>
             <div style="text-align: center; margin-top: 20px;">
                 <button class="btn-action" onclick="startTest()">Start Test</button>
@@ -314,6 +387,7 @@
     <section id="test-interface" class="hidden">
         <div style="text-align: center;">
             <div id="timer" class="timer-box">20:00</div>
+            <div id="practice-progress" class="practice-progress">Answered 0 of 5 questions</div>
         </div>
         
         <div class="test-layout">
@@ -371,6 +445,8 @@
     <section id="test-result" class="hidden">
         <h2>Test Completed!</h2>
         <div id="score-display" class="result-msg"></div>
+        <div id="band-display" class="practice-meta"></div>
+        <div id="answer-review" class="answer-review"></div>
         <div style="text-align: center; margin-top: 20px;">
             <button class="btn-action" onclick="resetPractice()">Back to Selection</button>
         </div>
@@ -397,67 +473,191 @@
     </section>
 </div>
 
+<button id="to-top-btn" class="to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Back to top">↑</button>
+
 <footer><p>© 2026 Qadam English — IELTS </p></footer>
 
 <script>
+const correctAnswers = { q1: 'b', q2: 'c', q3: 'b', q4: 'c', q5: 'b' };
+
 function showTab(tabName, element) {
     const mainContent = document.getElementById('main-content');
     if(mainContent) mainContent.classList.add('hidden');
-    
+
     document.getElementById('files-content').classList.add('hidden');
     document.getElementById('community-content').classList.add('hidden');
     document.getElementById('practice-content').classList.add('hidden');
-    
+
     document.getElementById(tabName + '-content').classList.remove('hidden');
 
     const buttons = document.querySelectorAll('.tabs-container a');
     buttons.forEach(btn => btn.classList.remove('active'));
 
-    element.classList.add('active');
+    const activeBtn = element || document.querySelector(`.tabs-container a[data-tab="${tabName}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
 }
 
-let timeLeft = 1200; 
+function filterMaterials() {
+    const query = document.getElementById('resource-search').value.trim().toLowerCase();
+    const cards = document.querySelectorAll('#files-content .card');
+
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.classList.toggle('hidden', query && !text.includes(query));
+    });
+
+    updateVisibleResourceCount();
+}
+
+function clearMaterialSearch() {
+    const input = document.getElementById('resource-search');
+    input.value = '';
+    filterMaterials();
+    input.focus();
+}
+
+function updateVisibleResourceCount() {
+    const cards = [...document.querySelectorAll('#files-content .card')];
+    const visible = cards.filter(card => !card.classList.contains('hidden')).length;
+    const total = cards.length;
+    document.getElementById('resource-count').innerText = `Showing ${visible} of ${total} resources`;
+}
+
+function toggleBackToTop() {
+    const btn = document.getElementById('to-top-btn');
+    if (!btn) return;
+    btn.classList.toggle('show', window.scrollY > 300);
+}
+
+function updatePracticeProgress() {
+    const total = Object.keys(correctAnswers).length;
+    const answered = Object.keys(correctAnswers).filter(q => document.querySelector(`input[name="${q}"]:checked`)).length;
+    document.getElementById('practice-progress').innerText = `Answered ${answered} of ${total} questions`;
+}
+
+function calculateBand(score, total) {
+    const ratio = score / total;
+    if (ratio >= 0.9) return 'Estimated band: 8.5 - 9.0';
+    if (ratio >= 0.8) return 'Estimated band: 7.5 - 8.0';
+    if (ratio >= 0.7) return 'Estimated band: 6.5 - 7.0';
+    if (ratio >= 0.6) return 'Estimated band: 5.5 - 6.0';
+    return 'Estimated band: below 5.5';
+}
+
+function renderAnswerReview(userAnswers) {
+    const review = document.getElementById('answer-review');
+    review.innerHTML = '';
+
+    Object.keys(correctAnswers).forEach((q, idx) => {
+        const user = userAnswers[q] || '—';
+        const correct = correctAnswers[q];
+        const isCorrect = user === correct;
+        const item = document.createElement('div');
+        item.className = `answer-review-item ${isCorrect ? 'correct' : 'wrong'}`;
+        item.innerText = `${idx + 1}) Your answer: ${user.toUpperCase()} | Correct: ${correct.toUpperCase()}`;
+        review.appendChild(item);
+    });
+}
+
+function loadBestScore() {
+    const best = localStorage.getItem('ielts-best-reading-score');
+    const label = document.getElementById('best-score');
+    if (!best) {
+        label.innerText = 'Best score: —';
+        return;
+    }
+    const { score, total } = JSON.parse(best);
+    label.innerText = `Best score: ${score} / ${total}`;
+}
+
+let timeLeft = 1200;
 let timerInterval;
 
 function startTest() {
     document.getElementById('test-selector').classList.add('hidden');
     document.getElementById('test-interface').classList.remove('hidden');
-    timeLeft = 1200;
+
+    const selectedDuration = Number(document.getElementById('test-duration').value) || 20;
+    timeLeft = selectedDuration * 60;
     updateTimerDisplay();
+    updatePracticeProgress();
+
+    clearInterval(timerInterval);
     timerInterval = setInterval(() => {
         timeLeft--;
         updateTimerDisplay();
-        if (timeLeft <= 0) finishTest();
+        if (timeLeft <= 0) finishTest(true);
     }, 1000);
 }
 
 function updateTimerDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
-    document.getElementById('timer').innerText = 
+    document.getElementById('timer').innerText =
         `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
-function finishTest() {
+function finishTest(forceFinish = false) {
+    const unanswered = Object.keys(correctAnswers).filter(q => !document.querySelector(`input[name="${q}"]:checked`));
+    if (!forceFinish && unanswered.length > 0) {
+        const ok = confirm(`You still have ${unanswered.length} unanswered question(s). Finish anyway?`);
+        if (!ok) return;
+    }
+
     clearInterval(timerInterval);
     let score = 0;
-    const answers = { q1: 'b', q2: 'c', q3: 'b', q4: 'c', q5: 'b' };
-    
-    for (let q in answers) {
+    const userAnswers = {};
+
+    for (let q in correctAnswers) {
         const selected = document.querySelector(`input[name="${q}"]:checked`);
-        if (selected && selected.value === answers[q]) score++;
+        userAnswers[q] = selected ? selected.value : null;
+        if (selected && selected.value === correctAnswers[q]) score++;
     }
-    
+
+    const total = Object.keys(correctAnswers).length;
+
     document.getElementById('test-interface').classList.add('hidden');
     document.getElementById('test-result').classList.remove('hidden');
-    document.getElementById('score-display').innerText = `Your Score: ${score} / 5`;
+    document.getElementById('score-display').innerText = `Your Score: ${score} / ${total}`;
+    document.getElementById('band-display').innerText = calculateBand(score, total);
+
+    renderAnswerReview(userAnswers);
+
+    const previousBest = localStorage.getItem('ielts-best-reading-score');
+    if (!previousBest || score > JSON.parse(previousBest).score) {
+        localStorage.setItem('ielts-best-reading-score', JSON.stringify({ score, total }));
+    }
+    loadBestScore();
 }
 
 function resetPractice() {
+    clearInterval(timerInterval);
     document.getElementById('test-result').classList.add('hidden');
+    document.getElementById('test-interface').classList.add('hidden');
     document.getElementById('test-selector').classList.remove('hidden');
     document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
+    document.getElementById('answer-review').innerHTML = '';
+    document.getElementById('band-display').innerText = '';
+    timeLeft = (Number(document.getElementById('test-duration').value) || 20) * 60;
+    updateTimerDisplay();
+    updatePracticeProgress();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateVisibleResourceCount();
+    toggleBackToTop();
+    loadBestScore();
+    updatePracticeProgress();
+    window.addEventListener('scroll', toggleBackToTop);
+    document.querySelectorAll('#questions-container input[type="radio"]').forEach(input => {
+        input.addEventListener('change', updatePracticeProgress);
+    });
+
+    const hashTab = window.location.hash.replace('#', '');
+    if (['files', 'practice', 'community'].includes(hashTab)) {
+        showTab(hashTab);
+    }
+});
 </script>
 </body>
 </html>
