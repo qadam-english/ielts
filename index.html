@@ -128,11 +128,63 @@
   .question-item input { margin-right: 10px; }
   .result-msg { font-size: 24px; font-weight: bold; color: #2e7d32; text-align: center; }
 
+  .resources-toolbar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0 10px;
+  }
+
+  .resources-toolbar input {
+    min-width: 280px;
+    max-width: 480px;
+    width: 100%;
+    padding: 10px 14px;
+    border: 2px solid #bbdefb;
+    border-radius: 10px;
+    font-size: 15px;
+  }
+
+  .resources-meta {
+    text-align: center;
+    color: #0d47a1;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .to-top {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: none;
+    background: #0d47a1;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .to-top.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .to-top:hover { transform: translateY(-3px); }
+
   @media(max-width:768px){
     .grid-2x2 .card, .grid-3x3 .card, .grid-full .card { flex: 0 1 100%; }
     .tabs-container { gap: 8px; flex-wrap: wrap; padding: 10px; margin-top: 0; }
     .tabs-container a { flex: 1; text-align: center; font-size: 14px; padding: 10px 5px; }
     .logo { position: relative; left: 0; top: 0; margin: 0 auto 15px; }
+    .resources-toolbar input { min-width: 0; }
     
     /* На мобилках возвращаем колонку в обычный вид */
     .test-layout { flex-direction: column; }
@@ -149,15 +201,21 @@
 </header>
 
 <nav class="tabs-container">
-    <a onclick="showTab('files', this)" class="active">Materials</a>
-    <a onclick="showTab('practice', this)">Practice</a>
-    <a onclick="showTab('community', this)">Community</a>
+    <a data-tab="files" onclick="showTab('files', this)" class="active">Materials</a>
+    <a data-tab="practice" onclick="showTab('practice', this)">Practice</a>
+    <a data-tab="community" onclick="showTab('community', this)">Community</a>
 </nav>
 
 <div id="files-content">
     <section>
         <h2>Student Resources</h2>
         <p>Access these materials to boost your preparation.</p>
+
+        <div class="resources-toolbar">
+            <input id="resource-search" type="text" placeholder="Quick search (e.g. writing, IELTS 12, speaking)" oninput="filterMaterials()">
+            <button class="btn-action" onclick="clearMaterialSearch()">Clear</button>
+        </div>
+        <div id="resource-count" class="resources-meta">Showing all resources</div>
         
         <div class="test-group-box">
             <h3 class="sub-group-title">Cambridge Practice Tests for IELTS</h3>
@@ -397,26 +455,61 @@
     </section>
 </div>
 
+<button id="to-top-btn" class="to-top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" aria-label="Back to top">↑</button>
+
 <footer><p>© 2026 Qadam English — IELTS </p></footer>
 
 <script>
 function showTab(tabName, element) {
     const mainContent = document.getElementById('main-content');
     if(mainContent) mainContent.classList.add('hidden');
-    
+
     document.getElementById('files-content').classList.add('hidden');
     document.getElementById('community-content').classList.add('hidden');
     document.getElementById('practice-content').classList.add('hidden');
-    
+
     document.getElementById(tabName + '-content').classList.remove('hidden');
 
     const buttons = document.querySelectorAll('.tabs-container a');
     buttons.forEach(btn => btn.classList.remove('active'));
 
-    element.classList.add('active');
+    const activeBtn = element || document.querySelector(`.tabs-container a[data-tab="${tabName}"]`);
+    if (activeBtn) activeBtn.classList.add('active');
 }
 
-let timeLeft = 1200; 
+function filterMaterials() {
+    const query = document.getElementById('resource-search').value.trim().toLowerCase();
+    const cards = document.querySelectorAll('#files-content .card');
+
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        card.classList.toggle('hidden', query && !text.includes(query));
+    });
+
+    updateVisibleResourceCount();
+}
+
+function clearMaterialSearch() {
+    const input = document.getElementById('resource-search');
+    input.value = '';
+    filterMaterials();
+    input.focus();
+}
+
+function updateVisibleResourceCount() {
+    const cards = [...document.querySelectorAll('#files-content .card')];
+    const visible = cards.filter(card => !card.classList.contains('hidden')).length;
+    const total = cards.length;
+    document.getElementById('resource-count').innerText = `Showing ${visible} of ${total} resources`;
+}
+
+function toggleBackToTop() {
+    const btn = document.getElementById('to-top-btn');
+    if (!btn) return;
+    btn.classList.toggle('show', window.scrollY > 300);
+}
+
+let timeLeft = 1200;
 let timerInterval;
 
 function startTest() {
@@ -434,7 +527,7 @@ function startTest() {
 function updateTimerDisplay() {
     const minutes = Math.floor(timeLeft / 60);
     const seconds = timeLeft % 60;
-    document.getElementById('timer').innerText = 
+    document.getElementById('timer').innerText =
         `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 }
 
@@ -442,12 +535,12 @@ function finishTest() {
     clearInterval(timerInterval);
     let score = 0;
     const answers = { q1: 'b', q2: 'c', q3: 'b', q4: 'c', q5: 'b' };
-    
+
     for (let q in answers) {
         const selected = document.querySelector(`input[name="${q}"]:checked`);
         if (selected && selected.value === answers[q]) score++;
     }
-    
+
     document.getElementById('test-interface').classList.add('hidden');
     document.getElementById('test-result').classList.remove('hidden');
     document.getElementById('score-display').innerText = `Your Score: ${score} / 5`;
@@ -458,6 +551,17 @@ function resetPractice() {
     document.getElementById('test-selector').classList.remove('hidden');
     document.querySelectorAll('input[type="radio"]').forEach(el => el.checked = false);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    updateVisibleResourceCount();
+    toggleBackToTop();
+    window.addEventListener('scroll', toggleBackToTop);
+
+    const hashTab = window.location.hash.replace('#', '');
+    if (['files', 'practice', 'community'].includes(hashTab)) {
+        showTab(hashTab);
+    }
+});
 </script>
 </body>
 </html>
