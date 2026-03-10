@@ -79,6 +79,7 @@
   .card-container{ display:flex; flex-wrap:wrap; gap:20px; justify-content: center; margin-top:20px; }
   .grid-2x2 .card { flex: 0 1 calc(50% - 20px); min-width: 280px; }
   .grid-3x3 .card { flex: 0 1 calc(33.333% - 20px); min-width: 250px; }
+  .grid-4x5 .card { flex: 0 1 calc(25% - 20px); min-width: 180px; }
   .grid-full .card { flex: 0 1 100%; }
 
   .card{ background:#bbdefb; border-radius:12px; padding:20px; box-shadow:0 5px 15px rgba(0,0,0,0.2); transition:0.3s; text-align: center; }
@@ -133,6 +134,9 @@
   .answer-review-item { background:#e3f2fd; border-radius:8px; padding:10px 14px; }
   .answer-review-item.correct { border-left: 5px solid #2e7d32; }
   .answer-review-item.wrong { border-left: 5px solid #d32f2f; }
+  .passage-switcher { display:flex; gap:10px; flex-wrap:wrap; margin-bottom: 15px; }
+  .passage-switcher button { margin-top:0; }
+  .passage-switcher button.active { background:#2e7d32; }
 
   .resources-toolbar {
     display: flex;
@@ -186,7 +190,7 @@
   .to-top:hover { transform: translateY(-3px); }
 
   @media(max-width:768px){
-    .grid-2x2 .card, .grid-3x3 .card, .grid-full .card { flex: 0 1 100%; }
+    .grid-2x2 .card, .grid-3x3 .card, .grid-4x5 .card, .grid-full .card { flex: 0 1 100%; }
     .tabs-container { gap: 8px; flex-wrap: wrap; padding: 10px; margin-top: 0; }
     .tabs-container a { flex: 1; text-align: center; font-size: 14px; padding: 10px 5px; }
     .logo { position: relative; left: 0; top: 0; margin: 0 auto 15px; }
@@ -225,7 +229,7 @@
         
         <div class="test-group-box">
             <h3 class="sub-group-title">Cambridge Practice Tests for IELTS</h3>
-            <div class="card-container grid-3x3">
+            <div class="card-container grid-4x5">
                 <div class="card"><h3>IELTS 1</h3><a href="IELTS 1.pdf" class="btn-download" download>Download</a></div>
                 <div class="card"><h3>IELTS 2</h3><a href="IELTS 2.pdf" class="btn-download" download>Download</a></div>
                 <div class="card"><h3>IELTS 3</h3><a href="IELTS 3.pdf" class="btn-download" download>Download</a></div>
@@ -241,6 +245,11 @@
                 <div class="card"><h3>IELTS 13</h3><a href="IELTS 13.pdf" class="btn-download" download>Download</a></div>
                 <div class="card"><h3>IELTS 14</h3><a href="IELTS 14.pdf" class="btn-download" download>Download</a></div>
                 <div class="card"><h3>IELTS 15</h3><a href="IELTS 15.pdf" class="btn-download" download>Download</a></div>
+                <div class="card"><h3>IELTS 16</h3><a href="IELTS 16.pdf" class="btn-download" download>Download</a></div>
+                <div class="card"><h3>IELTS 17</h3><a href="IELTS 17.pdf" class="btn-download" download>Download</a></div>
+                <div class="card"><h3>IELTS 18</h3><a href="IELTS 18.pdf" class="btn-download" download>Download</a></div>
+                <div class="card"><h3>IELTS 19</h3><a href="IELTS 19.pdf" class="btn-download" download>Download</a></div>
+                <div class="card"><h3>IELTS 20</h3><a href="IELTS 20.pdf" class="btn-download" download>Download</a></div>
             </div>
         </div>
 
@@ -367,6 +376,7 @@
                     <label><b>Select Variant:</b></label>
                     <select id="test-variant" style="width: 100%; padding: 10px; border-radius: 5px; margin-top: 5px;">
                         <option value="0">Variant 0 (Sample)</option>
+                        <option value="1">Variant 1</option>
                     </select>
                 </div>
                 <div style="flex: 1; min-width: 250px;">
@@ -387,53 +397,15 @@
     <section id="test-interface" class="hidden">
         <div style="text-align: center;">
             <div id="timer" class="timer-box">20:00</div>
-            <div id="practice-progress" class="practice-progress">Answered 0 of 5 questions</div>
+            <div id="practice-progress" class="practice-progress">Answered 0 of 0 questions</div>
         </div>
         
         <div class="test-layout">
-            <div class="text-column">
-                <h3>Reading Passage: The Future of AI</h3>
-                <p>Artificial Intelligence (AI) is transforming the way we live and work. From self-driving cars to advanced medical diagnostics, AI's potential seems limitless. However, many experts express concerns about ethical implications and job displacement. Research suggests that while AI may replace some manual tasks, it will also create new roles that require human creativity and emotional intelligence. Understanding this balance is crucial for future development.</p>
-            </div>
+            <div class="text-column" id="passage-text-column"></div>
 
             <div class="questions-column">
-                <div id="questions-container">
-                    <div class="question-item">
-                        <p><b>1. According to the text, what is one major benefit of AI?</b></p>
-                        <input type="radio" name="q1" value="a"> A) It removes all ethical concerns.<br>
-                        <input type="radio" name="q1" value="b"> B) Advanced medical diagnostics.<br>
-                        <input type="radio" name="q1" value="c"> C) Total elimination of job displacement.<br>
-                        <input type="radio" name="q1" value="d"> D) It only affects manual labor roles.<br>
-                    </div>
-                    <div class="question-item">
-                        <p><b>2. What skills will be required for the new roles created by AI?</b></p>
-                        <input type="radio" name="q2" value="a"> A) Basic mechanical skills.<br>
-                        <input type="radio" name="q2" value="b"> B) Ability to work without breaks.<br>
-                        <input type="radio" name="q2" value="c"> C) Human creativity and emotional intelligence.<br>
-                        <input type="radio" name="q2" value="d"> D) Superior speed in data entry.<br>
-                    </div>
-                    <div class="question-item">
-                        <p><b>3. What is the main concern expressed by experts regarding AI?</b></p>
-                        <input type="radio" name="q3" value="a"> A) Lack of speed.<br>
-                        <input type="radio" name="q3" value="b"> B) Ethical implications and jobs.<br>
-                        <input type="radio" name="q3" value="c"> C) Cost of implementation.<br>
-                        <input type="radio" name="q3" value="d"> D) Limited diagnostic abilities.<br>
-                    </div>
-                    <div class="question-item">
-                        <p><b>4. How does AI impact manual tasks according to the passage?</b></p>
-                        <input type="radio" name="q4" value="a"> A) It has no impact on them.<br>
-                        <input type="radio" name="q4" value="b"> B) It makes them harder.<br>
-                        <input type="radio" name="q4" value="c"> C) It replaces some of them.<br>
-                        <input type="radio" name="q4" value="d"> D) It increases the need for them.<br>
-                    </div>
-                    <div class="question-item">
-                        <p><b>5. What is considered "crucial" for future development?</b></p>
-                        <input type="radio" name="q5" value="a"> A) Ignoring the balance between tasks.<br>
-                        <input type="radio" name="q5" value="b"> B) Understanding the balance of AI and human roles.<br>
-                        <input type="radio" name="q5" value="c"> C) Accelerating job displacement.<br>
-                        <input type="radio" name="q5" value="d"> D) Disabling diagnostic tools.<br>
-                    </div>
-                </div>
+                <div id="passage-switcher" class="passage-switcher"></div>
+                <div id="questions-container"></div>
 
                 <div style="text-align: center;">
                     <button class="btn-action" style="background: #2e7d32; width: 100%;" onclick="finishTest()">Finish Test</button>
@@ -478,7 +450,95 @@
 <footer><p>© 2026 Qadam English — IELTS </p></footer>
 
 <script>
-const correctAnswers = { q1: 'b', q2: 'c', q3: 'b', q4: 'c', q5: 'b' };
+const TEST_BANK = {
+    0: {
+        id: 'sample',
+        title: 'Variant 0 (Sample)',
+        passages: [
+            {
+                title: 'Reading Passage 1: The Future of AI',
+                text: [
+                    "Artificial Intelligence (AI) is transforming the way we live and work. From self-driving cars to advanced medical diagnostics, AI's potential seems limitless.",
+                    'However, many experts express concerns about ethical implications and job displacement. Research suggests that while AI may replace some manual tasks, it will also create new roles that require human creativity and emotional intelligence.',
+                    'Understanding this balance is crucial for future development.'
+                ],
+                questions: [
+                    { id: 'q1', prompt: 'According to the text, what is one major benefit of AI?', options: { a: 'It removes all ethical concerns.', b: 'Advanced medical diagnostics.', c: 'Total elimination of job displacement.', d: 'It only affects manual labor roles.' }, answer: 'b' },
+                    { id: 'q2', prompt: 'What skills will be required for the new roles created by AI?', options: { a: 'Basic mechanical skills.', b: 'Ability to work without breaks.', c: 'Human creativity and emotional intelligence.', d: 'Superior speed in data entry.' }, answer: 'c' },
+                    { id: 'q3', prompt: 'What is the main concern expressed by experts regarding AI?', options: { a: 'Lack of speed.', b: 'Ethical implications and jobs.', c: 'Cost of implementation.', d: 'Limited diagnostic abilities.' }, answer: 'b' },
+                    { id: 'q4', prompt: 'How does AI impact manual tasks according to the passage?', options: { a: 'It has no impact on them.', b: 'It makes them harder.', c: 'It replaces some of them.', d: 'It increases the need for them.' }, answer: 'c' },
+                    { id: 'q5', prompt: 'What is considered crucial for future development?', options: { a: 'Ignoring the balance between tasks.', b: 'Understanding the balance of AI and human roles.', c: 'Accelerating job displacement.', d: 'Disabling diagnostic tools.' }, answer: 'b' }
+                ]
+            }
+        ]
+    },
+    1: {
+        id: 'reading-variant-1',
+        title: 'Variant 1',
+        passages: [
+            {
+                title: 'Reading Passage 1: A Spark, A Flint: How Fire Leapt to Life',
+                text: [
+                    'Fire changed human history. Anthropologists believe that early control of fire helped people cook food, survive cold climates and organise social life after dark.',
+                    'The first fire was almost certainly collected from natural events such as lightning strikes or volcanic activity. Over time, people learned to preserve embers and transport them between camps.',
+                    'A later development was creating fire on demand by friction or percussion. This was a turning point because reliable heat and light supported migration, tool-making and cultural exchange.'
+                ],
+                questions: [
+                    { id: 'v1q1', prompt: 'What does the passage say about the earliest source of fire?', options: { a: 'It was produced in modern laboratories.', b: 'It came from natural events.', c: 'It was discovered in metal factories.', d: 'It was invented by farmers.' }, answer: 'b' },
+                    { id: 'v1q2', prompt: 'Why was preserving embers important?', options: { a: 'It reduced the need to cook food.', b: 'It allowed people to carry fire between camps.', c: 'It stopped volcanic eruptions.', d: 'It made stone tools unnecessary.' }, answer: 'b' },
+                    { id: 'v1q3', prompt: 'What is described as a turning point?', options: { a: 'The end of migration.', b: 'The loss of cultural exchange.', c: 'The ability to create fire on demand.', d: 'The replacement of tools by machines.' }, answer: 'c' },
+                    { id: 'v1q4', prompt: 'Which benefit of fire is mentioned directly?', options: { a: 'Permanent sea travel.', b: 'Reliable heat and light.', c: 'Automatic food production.', d: 'Digital communication.' }, answer: 'b' },
+                    { id: 'v1q5', prompt: 'The overall message of the passage is that fire...', options: { a: 'had little influence on society.', b: 'was only useful for hunting.', c: 'was a major driver of human development.', d: 'was available everywhere without effort.' }, answer: 'c' }
+                ]
+            },
+            {
+                title: 'Reading Passage 2: Zoo Conservation Programmes',
+                text: [
+                    'Modern zoos now focus on conservation as well as public display. Many institutions run breeding programmes to protect species that are threatened in the wild.',
+                    'Supporters argue that zoos create genetic reservoirs and can later reintroduce animals to natural habitats. Critics respond that captivity can change behaviour and reduce survival skills.',
+                    'Most experts agree that zoos are effective only when linked with habitat protection, research and international cooperation.'
+                ],
+                questions: [
+                    { id: 'v1q6', prompt: 'What is one modern role of zoos according to the text?', options: { a: 'Conservation breeding.', b: 'Replacing natural habitats.', c: 'Eliminating field research.', d: 'Training domestic pets.' }, answer: 'a' },
+                    { id: 'v1q7', prompt: 'Why do supporters value zoo breeding programmes?', options: { a: 'They reduce all conservation costs.', b: 'They guarantee immediate reintroduction.', c: 'They help preserve genetic diversity.', d: 'They stop climate change.' }, answer: 'c' },
+                    { id: 'v1q8', prompt: 'What concern do critics raise?', options: { a: 'Zoos are always too small to visit.', b: 'Captivity may affect animal behaviour.', c: 'Breeding programmes are illegal.', d: 'Research cannot be done in zoos.' }, answer: 'b' },
+                    { id: 'v1q9', prompt: 'According to the final paragraph, successful zoo work depends on...', options: { a: 'ticket sales only.', b: 'habitat protection and cooperation.', c: 'keeping all species in cities.', d: 'avoiding scientific research.' }, answer: 'b' },
+                    { id: 'v1q10', prompt: "The writer's position is best described as...", options: { a: 'completely against zoos.', b: 'fully indifferent to conservation.', c: 'conditionally supportive.', d: 'focused only on tourism.' }, answer: 'c' }
+                ]
+            },
+            {
+                title: 'Reading Passage 3: Architecture — Reaching for the Sky',
+                text: [
+                    'Advances in engineering made modern skyscrapers possible. Steel frames, elevators and new safety systems allowed buildings to grow taller than traditional stone structures.',
+                    'Urban planners argue that vertical development can save land and keep services close together. However, others warn that dense high-rise districts may create social and environmental pressures if poorly designed.',
+                    'Today, architects combine technology with sustainability. Energy-efficient materials and smarter ventilation systems are now central to many large projects.'
+                ],
+                questions: [
+                    { id: 'v1q11', prompt: 'Which innovation helped skyscrapers become practical?', options: { a: 'Stone-only construction.', b: 'Steel frames and elevators.', c: 'Underground roads.', d: 'Wooden bridges.' }, answer: 'b' },
+                    { id: 'v1q12', prompt: 'What is one argument for vertical development?', options: { a: 'It increases travel distance.', b: 'It saves urban land.', c: 'It removes need for planning.', d: 'It lowers all building costs instantly.' }, answer: 'b' },
+                    { id: 'v1q13', prompt: 'What risk is mentioned for dense high-rise areas?', options: { a: 'Loss of electricity nationwide.', b: 'Higher rainfall in all cities.', c: 'Social and environmental pressures.', d: 'No public transport access.' }, answer: 'c' },
+                    { id: 'v1q14', prompt: 'What feature is common in current large projects?', options: { a: 'Ignoring ventilation.', b: 'Energy-efficient materials.', c: 'Removing safety systems.', d: 'Shorter building lifespans.' }, answer: 'b' },
+                    { id: 'v1q15', prompt: 'The final paragraph suggests that architecture now...', options: { a: 'rejects technology.', b: 'balances innovation and sustainability.', c: 'avoids urban environments.', d: 'returns to only historical methods.' }, answer: 'b' }
+                ]
+            }
+        ]
+    }
+};
+
+let activeTest = TEST_BANK[0];
+let activePassageIndex = 0;
+let timeLeft = 1200;
+let timerInterval;
+
+function getCorrectAnswers() {
+    const map = {};
+    activeTest.passages.forEach((passage) => {
+        passage.questions.forEach((question) => {
+            map[question.id] = question.answer;
+        });
+    });
+    return map;
+}
 
 function showTab(tabName, element) {
     const mainContent = document.getElementById('main-content');
@@ -529,9 +589,52 @@ function toggleBackToTop() {
     btn.classList.toggle('show', window.scrollY > 300);
 }
 
+function renderPassageButtons() {
+    const container = document.getElementById('passage-switcher');
+    container.innerHTML = '';
+
+    activeTest.passages.forEach((_, idx) => {
+        const button = document.createElement('button');
+        button.className = 'btn-action' + (idx === activePassageIndex ? ' active' : '');
+        button.innerText = `Text ${idx + 1}`;
+        button.onclick = () => {
+            activePassageIndex = idx;
+            renderActivePassage();
+        };
+        container.appendChild(button);
+    });
+}
+
+function renderActivePassage() {
+    const passage = activeTest.passages[activePassageIndex];
+    const textColumn = document.getElementById('passage-text-column');
+    const questionsContainer = document.getElementById('questions-container');
+
+    textColumn.innerHTML = `<h3>${passage.title}</h3>${passage.text.map(par => `<p>${par}</p>`).join('')}`;
+
+    questionsContainer.innerHTML = '';
+    passage.questions.forEach((question, questionIndex) => {
+        const item = document.createElement('div');
+        item.className = 'question-item';
+        item.innerHTML = `<p><b>${questionIndex + 1}. ${question.prompt}</b></p>` +
+            Object.entries(question.options)
+                .map(([key, value]) => `<label><input type="radio" name="${question.id}" value="${key}"> ${key.toUpperCase()}) ${value}</label><br>`)
+                .join('');
+        questionsContainer.appendChild(item);
+    });
+
+    document.querySelectorAll('#questions-container input[type="radio"]').forEach(input => {
+        input.addEventListener('change', updatePracticeProgress);
+    });
+
+    renderPassageButtons();
+    updatePracticeProgress();
+}
+
 function updatePracticeProgress() {
-    const total = Object.keys(correctAnswers).length;
-    const answered = Object.keys(correctAnswers).filter(q => document.querySelector(`input[name="${q}"]:checked`)).length;
+    const answers = getCorrectAnswers();
+    const total = Object.keys(answers).length;
+    const answered = Object.keys(answers).filter(q => document.querySelector(`input[name="${q}"]:checked`)).length;
     document.getElementById('practice-progress').innerText = `Answered ${answered} of ${total} questions`;
 }
 
@@ -547,14 +650,15 @@ function calculateBand(score, total) {
 function renderAnswerReview(userAnswers) {
     const review = document.getElementById('answer-review');
     review.innerHTML = '';
+    const answers = getCorrectAnswers();
 
-    Object.keys(correctAnswers).forEach((q, idx) => {
+    Object.keys(answers).forEach((q, idx) => {
         const user = userAnswers[q] || '—';
-        const correct = correctAnswers[q];
+        const correct = answers[q];
         const isCorrect = user === correct;
         const item = document.createElement('div');
         item.className = `answer-review-item ${isCorrect ? 'correct' : 'wrong'}`;
-        item.innerText = `${idx + 1}) Your answer: ${user.toUpperCase()} | Correct: ${correct.toUpperCase()}`;
+        item.innerText = `${idx + 1}) Your answer: ${String(user).toUpperCase()} | Correct: ${correct.toUpperCase()}`;
         review.appendChild(item);
     });
 }
@@ -570,17 +674,18 @@ function loadBestScore() {
     label.innerText = `Best score: ${score} / ${total}`;
 }
 
-let timeLeft = 1200;
-let timerInterval;
-
 function startTest() {
+    const selectedVariant = Number(document.getElementById('test-variant').value);
+    activeTest = TEST_BANK[selectedVariant] || TEST_BANK[0];
+    activePassageIndex = 0;
+
     document.getElementById('test-selector').classList.add('hidden');
     document.getElementById('test-interface').classList.remove('hidden');
 
     const selectedDuration = Number(document.getElementById('test-duration').value) || 20;
     timeLeft = selectedDuration * 60;
     updateTimerDisplay();
-    updatePracticeProgress();
+    renderActivePassage();
 
     clearInterval(timerInterval);
     timerInterval = setInterval(() => {
@@ -598,7 +703,8 @@ function updateTimerDisplay() {
 }
 
 function finishTest(forceFinish = false) {
-    const unanswered = Object.keys(correctAnswers).filter(q => !document.querySelector(`input[name="${q}"]:checked`));
+    const answers = getCorrectAnswers();
+    const unanswered = Object.keys(answers).filter(q => !document.querySelector(`input[name="${q}"]:checked`));
     if (!forceFinish && unanswered.length > 0) {
         const ok = confirm(`You still have ${unanswered.length} unanswered question(s). Finish anyway?`);
         if (!ok) return;
@@ -608,13 +714,13 @@ function finishTest(forceFinish = false) {
     let score = 0;
     const userAnswers = {};
 
-    for (let q in correctAnswers) {
+    for (let q in answers) {
         const selected = document.querySelector(`input[name="${q}"]:checked`);
         userAnswers[q] = selected ? selected.value : null;
-        if (selected && selected.value === correctAnswers[q]) score++;
+        if (selected && selected.value === answers[q]) score++;
     }
 
-    const total = Object.keys(correctAnswers).length;
+    const total = Object.keys(answers).length;
 
     document.getElementById('test-interface').classList.add('hidden');
     document.getElementById('test-result').classList.remove('hidden');
@@ -649,9 +755,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadBestScore();
     updatePracticeProgress();
     window.addEventListener('scroll', toggleBackToTop);
-    document.querySelectorAll('#questions-container input[type="radio"]').forEach(input => {
-        input.addEventListener('change', updatePracticeProgress);
-    });
 
     const hashTab = window.location.hash.replace('#', '');
     if (['files', 'practice', 'community'].includes(hashTab)) {
