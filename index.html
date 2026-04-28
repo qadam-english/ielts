@@ -569,8 +569,10 @@ function showTab(tabName, element) {
     document.getElementById('files-content').classList.add('hidden');
     document.getElementById('community-content').classList.add('hidden');
     document.getElementById('practice-content').classList.add('hidden');
-
-    document.getElementById(tabName + '-content').classList.remove('hidden');
+    document.getElementById('ai-content').classList.add('hidden');
+    
+    const target = document.getElementById(tabName + '-content');
+    if (target) target.classList.remove('hidden');
 
     const buttons = document.querySelectorAll('.tabs-container a');
     buttons.forEach(btn => btn.classList.remove('active'));
