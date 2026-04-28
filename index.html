@@ -427,7 +427,12 @@
 </div>
 
 <div id="community-content" class="hidden">
-  <div id="ai-content" class="hidden">
+   <section>
+        <h2>Join Our Community</h2>
+        ...
+    </section>
+</div>
+  <div id="ai-content">
     <section>
         <h2>AI English Assistant</h2>
         <p style="text-align:center;">
@@ -774,7 +779,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('scroll', toggleBackToTop);
 
     const hashTab = window.location.hash.replace('#', '');
-    if (['files', 'practice', 'community'].includes(hashTab)) {
+    if (['files', 'practice', 'community', 'ai'].includes(hashTab)) {
         showTab(hashTab);
     }
 });
